@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class PuzzleGame : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-
     [Header("Game Elements")]
-    [Range(2,6)]
+    [Range(2, 6)]
     [SerializeField] private int difficulty = 4;
     [SerializeField] private Transform gameHolder;
     [SerializeField] private Transform piecePrefab;
@@ -34,7 +32,8 @@ public class PuzzleGame : MonoBehaviour
 
     private void Start()
     {
-        foreach (Texture2D texture in imageTextures) {
+        foreach (Texture2D texture in imageTextures)
+        {
             Image image = Instantiate(levelSelectPrefab, levelSelectPanel);
             image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
             image.GetComponent<Button>().onClick.AddListener(delegate { StartGame(texture); });
@@ -42,7 +41,7 @@ public class PuzzleGame : MonoBehaviour
     }
 
 
-    
+
 
     public void StartGame(Texture2D puzzleTexture)
     {
@@ -82,7 +81,7 @@ public class PuzzleGame : MonoBehaviour
     void CreatePuzzlePieces(Texture2D puzzleTexture)
     {
         height = 1f / dimensions.y;
-        float aspect = (float) puzzleTexture.width / puzzleTexture.height;
+        float aspect = (float)puzzleTexture.width / puzzleTexture.height;
         width = aspect / dimensions.x;
 
         for (int row = 0; row < dimensions.y; row++)
@@ -103,8 +102,8 @@ public class PuzzleGame : MonoBehaviour
                 float height1 = 1f / dimensions.y;
 
                 Vector2[] uv = new Vector2[4];
-                uv[0] = new Vector2(width1 * col , height1 * row);
-                uv[1] = new Vector2(width1 * (col+ 1), height1 * row);
+                uv[0] = new Vector2(width1 * col, height1 * row);
+                uv[1] = new Vector2(width1 * (col + 1), height1 * row);
                 uv[2] = new Vector2(width1 * col, height1 * (row + 1));
                 uv[3] = new Vector2(width1 * (col + 1), height1 * (row + 1));
 
@@ -198,7 +197,7 @@ public class PuzzleGame : MonoBehaviour
         int col = pieceIndex % dimensions.x;
         int row = pieceIndex / dimensions.x;
 
-        Vector2 targetPosition = new ((-width * dimensions.x / 2) + (width * col) + (width / 2), 
+        Vector2 targetPosition = new((-width * dimensions.x / 2) + (width * col) + (width / 2),
                                       (-height * dimensions.y / 2) + (height * row) + (height / 2));
 
 
@@ -209,9 +208,9 @@ public class PuzzleGame : MonoBehaviour
             draggingPiece.GetComponent<BoxCollider2D>().enabled = false;
 
             correctPieces++;
-            if (correctPieces == pieces.Count) 
-            { 
-                playAgainButton.SetActive(true);            
+            if (correctPieces == pieces.Count)
+            {
+                playAgainButton.SetActive(true);
             }
         }
 
